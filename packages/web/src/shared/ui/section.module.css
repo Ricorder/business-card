@@ -1,0 +1,22 @@
+.section {
+  margin-top: 44px;
+}
+
+.head {
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.description {
+  margin-top: 8px;
+  max-width: 68ch;
+  font-size: 14px;
+  color: var(--muted);
+}

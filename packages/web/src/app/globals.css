@@ -1,0 +1,110 @@
+:root {
+  --bg: #f6f5f2;
+  --bg-elevated: #fffdfa;
+  --panel: #ffffff;
+  --border: #e2ded6;
+  --border-strong: #c9c3b7;
+  --text: #1b1a17;
+  --muted: #6b665c;
+  --faint: #948d80;
+  --accent: #1f4b8f;
+  --accent-soft: #e8eefa;
+  --chip: #f0ede7;
+  --code-bg: #f2f0ec;
+  --shadow: 0 1px 2px rgb(27 26 23 / 6%), 0 8px 24px rgb(27 26 23 / 5%);
+  --radius: 14px;
+  --radius-small: 9px;
+  --gap: 24px;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #14161a;
+  --bg-elevated: #1a1d22;
+  --panel: #1d2128;
+  --border: #2c313a;
+  --border-strong: #3d434e;
+  --text: #eceef2;
+  --muted: #a1a8b4;
+  --faint: #7c8593;
+  --accent: #8ab4ff;
+  --accent-soft: #22314a;
+  --chip: #242933;
+  --code-bg: #191d24;
+  --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 10px 30px rgb(0 0 0 / 26%);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    ui-sans-serif, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+code,
+pre {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,69 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.6fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.languages {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.language {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--bg-elevated);
+}
+
+.languageName {
+  font-size: 14.5px;
+  font-weight: 580;
+}
+
+.languageLevel {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.education {
+  display: grid;
+  gap: 14px;
+}
+
+.educationItem {
+  padding-left: 14px;
+  border-left: 2px solid var(--border-strong);
+}
+
+.school {
+  font-size: 14.5px;
+  font-weight: 570;
+}
+
+.degree {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.note {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--faint);
+  max-width: 60ch;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

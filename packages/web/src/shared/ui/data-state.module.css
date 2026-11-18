@@ -1,0 +1,73 @@
+.loading {
+  margin-top: 32px;
+}
+
+.loadingCaption {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.skeleton {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.skeletonRow {
+  height: 15px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--chip), var(--border), var(--chip));
+  background-size: 220% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 130% 0;
+  }
+
+  to {
+    background-position: -30% 0;
+  }
+}
+
+.error {
+  margin-top: 32px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.errorTitle {
+  font-size: 15px;
+  font-weight: 620;
+}
+
+.errorMessage {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.errorHint {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.retry {
+  margin-top: 14px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  font-size: 13.5px;
+  font-weight: 560;
+}
+
+.retry:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

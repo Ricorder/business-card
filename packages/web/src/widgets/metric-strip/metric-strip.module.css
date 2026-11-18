@@ -1,0 +1,35 @@
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--gap);
+  margin-top: 28px;
+}
+
+.card {
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.value {
+  font-size: clamp(24px, 3.4vw, 30px);
+  font-weight: 660;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.label {
+  margin-top: 6px;
+  font-size: 13.5px;
+  font-weight: 550;
+  color: var(--accent);
+}
+
+.detail {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
