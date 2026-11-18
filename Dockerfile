@@ -23,8 +23,10 @@ RUN pnpm install --frozen-lockfile
 FROM base AS build
 COPY --from=deps /app /app
 COPY . .
+# Сборка api сама вызывает prisma generate: в CI образ не содержит
+# сгенерированного клиента, и отдельный шаг здесь легко разъехался бы с
+# порядком задач в пайплайне.
 RUN pnpm --filter @card/contracts build \
-  && pnpm --filter @card/api db:generate \
   && pnpm --filter @card/api build \
   && pnpm --filter @card/web build
 

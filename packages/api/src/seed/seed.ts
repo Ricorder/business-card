@@ -1,5 +1,5 @@
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
-import { PrismaClient } from '../generated/prisma/client.js'
+import { Prisma, PrismaClient } from '../generated/prisma/client.js'
 import { content } from './content.js'
 
 /**
@@ -79,7 +79,7 @@ async function main(): Promise<void> {
   }
 }
 
-type Tx = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]
+type Tx = Prisma.TransactionClient
 
 async function syncContacts(tx: Tx, profileId: string): Promise<number> {
   const seeds = [...content.contacts]

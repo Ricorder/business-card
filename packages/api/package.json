@@ -5,7 +5,7 @@
   "description": "NestJS (Fastify) + GraphQL code-first + Prisma/SQLite; раздаёт статический экспорт веба",
   "type": "module",
   "scripts": {
-    "build": "nest build",
+    "build": "prisma generate && nest build",
     "dev": "nest start --watch",
     "start": "node dist/main.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",

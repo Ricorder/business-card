@@ -1,7 +1,11 @@
 # Цифровая визитка — Евгений Колесников, Fullstack-разработчик
 
-**Посмотреть:** https://evgeny-kolesnikov.fly.dev (ссылка станет рабочей после выката)
-**Исходники:** https://github.com/Ricorder/business-card
+**Посмотреть:** https://evgeny-kolesnikov.fly.dev · **GraphQL (GraphiQL):** https://evgeny-kolesnikov.fly.dev/graphql
+**Исходники:** https://github.com/Ricorder/business-card · ![CI](https://github.com/Ricorder/business-card/actions/workflows/ci.yml/badge.svg)
+
+Приложение на Fly.io в регионе `fra` с `auto_stop_machines = 'stop'`: после простоя машина
+засыпает, и первый заход может подождать несколько секунд — это цена того, что демо не крутит
+постоянно оплачиваемый ресурс.
 
 Визитка презентует меня как специалиста и собрана на стеке, который требовался в задании.
 Важное отличие от обычного «портфолио на статике»: **содержимое страницы не написано в

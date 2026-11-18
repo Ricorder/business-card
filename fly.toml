@@ -1,6 +1,7 @@
-# app = "имя-приложения" задаёт `fly create`/`fly launch`; до первого деплоя
-# оно может быть занято чужим — тогда меняем здесь же.
-primary_region = 'hel'
+app = 'evgeny-kolesnikov'
+# hel (Хельсинки) аккаунту недоступен: volume там создать не удалось. fra —
+# ближайший из разрешённых к Москве, список снимается `fly platform regions`.
+primary_region = 'fra'
 
 [build]
 dockerfile = 'Dockerfile'
@@ -21,7 +22,7 @@ auto_start_machines = true
 min_machines_running = 0
 processes = ['app']
 
-[http_service.checks]
+[[http_service.checks]]
 interval = '30s'
 timeout = '5s'
 grace_period = '30s'
