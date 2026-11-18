@@ -52,7 +52,10 @@ COPY --from=build /app/packages/api/dist ./packages/api/dist
 COPY --from=build /app/packages/api/prisma ./packages/api/prisma
 COPY --from=build /app/packages/api/prisma.config.ts ./packages/api/prisma.config.ts
 COPY --from=build /app/packages/web/out ./packages/web/out
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+# COPY сохраняет права исходного файла, а в рабочем дереве скрипт лежит как
+# 600 — без --chmod он приезжает в образ неисполняемым, и контейнер остаётся
+# в состоянии Created без единой строчки в логах.
+COPY --chmod=755 docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN mkdir -p /data && chown -R node:node /data /app
 USER node
