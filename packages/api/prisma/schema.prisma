@@ -1,0 +1,149 @@
+// Prisma 7 генерирует TypeScript-исходники, и по умолчанию они ESM с
+// `import.meta.url`. Для NestJS 12, который сам поставляется только в ESM,
+// это правильный случай: moduleFormat=esm, а импорты с расширением .js, чтобы
+// NodeNext-разрешение работало без экзотических флагов компилятора.
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+}
+
+// Prisma 7: url больше не живёт в schema — соединение задаётся в
+// prisma.config.ts (для migrate) и в адаптере (для клиента).
+datasource db {
+  provider = "sqlite"
+}
+
+/// Единственная строка в таблице — шапка визитки.
+model Profile {
+  id          String   @id @default(cuid())
+  handle      String   @unique
+  displayName String
+  title       String
+  tagline     String
+  location    String
+  summary     String
+  timezone    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contacts ContactLink[]
+}
+
+/// kind/visibility — строки: SQLite не умеет enum. Сужение до union живёт
+/// в @card/contracts, схема ловит опечатку на сиде.
+model ContactLink {
+  id         String   @id @default(cuid())
+  profileId  String
+  kind       String
+  label      String
+  url        String
+  visibility String   @default("public")
+  position   Int      @default(0)
+  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@unique([profileId, kind, label])
+}
+
+/// Крупные цифры над списком мест работы.
+model Metric {
+  id       String  @id @default(cuid())
+  value    String
+  label    String
+  detail   String?
+  position Int     @default(0)
+}
+
+model Experience {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  company     String
+  companyNote String?
+  role        String
+  period      String
+  dateStart   String?
+  dateEnd     String?
+  isCurrent   Boolean @default(false)
+  location    String?
+  summary     String
+  position    Int     @default(0)
+
+  achievements Achievement[]
+}
+
+/// Один факт = одна строка. `featured` отсекает витрину от полного резюме.
+model Achievement {
+  id           String     @id @default(cuid())
+  experienceId String
+  text         String
+  category     String
+  featured     Boolean    @default(false)
+  position     Int        @default(0)
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  @@index([experienceId])
+}
+
+model Project {
+  id      String  @id @default(cuid())
+  slug    String  @unique
+  name    String
+  summary String
+  year    String?
+  url     String?
+  position Int    @default(0)
+
+  stack StackItem[]
+}
+
+/// SQLite не умеет массивы — стек проекта отдельной таблицей, а не CSV-строкой.
+model StackItem {
+  id        String  @id @default(cuid())
+  projectId String
+  name      String
+  position  Int     @default(0)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model SkillGroup {
+  id       String  @id @default(cuid())
+  slug     String  @unique
+  name     String
+  position Int     @default(0)
+
+  skills Skill[]
+}
+
+model Skill {
+  id       String     @id @default(cuid())
+  groupId  String
+  name     String
+  note     String?
+  featured Boolean    @default(false)
+  position Int        @default(0)
+  group    SkillGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@index([groupId])
+  @@unique([groupId, name])
+}
+
+model LanguageSkill {
+  id       String  @id @default(cuid())
+  name     String  @unique
+  level    String
+  position Int     @default(0)
+}
+
+model Education {
+  id       String  @id @default(cuid())
+  school   String
+  year     String
+  degree   String
+  note     String?
+  position Int     @default(0)
+}

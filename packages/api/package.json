@@ -1,0 +1,56 @@
+{
+  "name": "@card/api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NestJS (Fastify) + GraphQL code-first + Prisma/SQLite; раздаёт статический экспорт веба",
+  "type": "module",
+  "scripts": {
+    "build": "nest build",
+    "dev": "nest start --watch",
+    "start": "node dist/main.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "db:generate": "prisma generate",
+    "db:deploy": "prisma migrate deploy",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:compiled": "node dist/seed/seed.js",
+    "db:studio": "prisma studio"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.5.2",
+    "@as-integrations/fastify": "^3.1.0",
+    "@card/contracts": "workspace:*",
+    "@fastify/static": "^10.1.11",
+    "@nestjs/apollo": "^14.2.1",
+    "@nestjs/common": "^12.5.1",
+    "@nestjs/core": "^12.5.1",
+    "@nestjs/graphql": "^14.2.1",
+    "@nestjs/platform-fastify": "^12.5.1",
+    "@prisma/adapter-better-sqlite3": "^7.10.1",
+    "@prisma/client": "^7.10.1",
+    "better-sqlite3": "^13.2.0",
+    "graphql": "^16.15.0",
+    "prisma": "^7.10.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^12.0.13",
+    "@nestjs/schematics": "^12.0.13",
+    "@nestjs/testing": "^12.5.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.6",
+    "jest": "^30.5.2",
+    "source-map-support": "^0.5.21",
+    "ts-jest": "^29.4.15",
+    "ts-morph": "^28.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "5.9.3"
+  }
+}

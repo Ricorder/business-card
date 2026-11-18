@@ -1,0 +1,266 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Один факт из опыта: формулировка + категория."""
+type Achievement {
+  category: AchievementCategory!
+  id: String!
+  position: Int!
+  text: String!
+}
+
+"""
+Значение перечисления AchievementCategory; источник истины — zod-union в @card/contracts.
+"""
+enum AchievementCategory {
+  analytics
+  backend
+  frontend
+  infra
+  mobile
+  quality
+}
+
+"""
+Витрина: отобранный срез резюме, который читается за 40 секунд. Полное содержимое лежит в той же базе и отдаётся запросом resume.
+"""
+type Card {
+  experiences: [Experience!]!
+  languages: [Language!]!
+
+  """Только публичные контакты."""
+  links: [ContactLink!]!
+  metrics: [Metric!]!
+  profile: Profile!
+  skillGroups: [SkillGroup!]!
+}
+
+"""
+Значение перечисления ContactKind; источник истины — zod-union в @card/contracts.
+"""
+enum ContactKind {
+  email
+  github
+  other
+  phone
+  telegram
+  website
+}
+
+"""Ссылка для связи. Приватные в публичном API не отдаются."""
+type ContactLink {
+  id: String!
+  kind: ContactKind!
+  label: String!
+  position: Int!
+  url: String!
+}
+
+"""Образование."""
+type Education {
+  degree: String!
+  id: String!
+  note: String
+  position: Int!
+  school: String!
+  year: String!
+}
+
+"""
+Место работы. В `card` возвращаются только featured-буллеты (витрина читается за 40 секунд), в `resume` — все, при этом achievementsTotal остаётся честным числом всех записей.
+"""
+type Experience {
+  achievements: [Achievement!]!
+
+  """Сколько буллетов всего в базе, включая скрытые на витрине."""
+  achievementsTotal: Int!
+  company: String!
+
+  """Например «NDA» или отраслевая строка, если бренд нельзя назвать."""
+  companyNote: String
+  dateEnd: String
+  dateStart: String
+  id: String!
+  isCurrent: Boolean!
+  location: String
+
+  """Читимый период: «Май 2026 — настоящее время»."""
+  period: String!
+  role: String!
+
+  """slug для глубоких ссылок вида /#experience-<slug>."""
+  slug: String!
+
+  """Что за продукт, в двух предложениях."""
+  summary: String!
+}
+
+"""Состояние сервиса: используется healthcheck-ом контейнера."""
+type Health {
+  """
+  Пробуется реальным запросом к SQLite, а не просто конструктором клиента.
+  """
+  databaseConnected: Boolean!
+
+  """
+  Суммарное число строк содержимого: ловит «миграция применена, база пуста».
+  """
+  records: Int!
+  status: String!
+  uptimeSeconds: Int!
+  version: String!
+}
+
+"""Владение языком человека, а не программирования."""
+type Language {
+  id: String!
+  level: LanguageLevel!
+  name: String!
+  position: Int!
+}
+
+"""
+Значение перечисления LanguageLevel; источник истины — zod-union в @card/contracts.
+"""
+enum LanguageLevel {
+  a1
+  a2
+  b1
+  b2
+  native
+}
+
+"""Одна крупная цифра в шапке витрины."""
+type Metric {
+  """Откуда цифра: уточнение, снимающее вопрос «а не придумал ли»."""
+  detail: String
+  id: String!
+  label: String!
+  position: Int!
+  value: String!
+}
+
+"""Шапка визитки: кто, чем занимается и откуда."""
+type Profile {
+  displayName: String!
+
+  """Уникальный handle для URL и extern-систем."""
+  handle: String!
+  id: String!
+  location: String!
+
+  """Развёрнутое «о себе» для вкладки «Резюме»."""
+  summary: String!
+
+  """Одна строка позиционирования над остальным содержимым."""
+  tagline: String!
+
+  """IANA-таймзона, чтобы собеседник мог планировать созвон."""
+  timezone: String
+
+  """Позиция, как её видит рынок: Fullstack-разработчик."""
+  title: String!
+
+  """ISO-дата последнего обновления содержимого."""
+  updatedAt: String!
+}
+
+"""Продукт, а не место работы: что сделано и на чём."""
+type Project {
+  id: String!
+  name: String!
+  position: Int!
+  slug: String!
+
+  """Отдельная таблица в SQLite, а не CSV-строка."""
+  stack: [String!]!
+  summary: String!
+
+  """Публичная ссылка, если она есть и её можно показывать."""
+  url: String
+  year: String
+}
+
+type Query {
+  """Витрина визитки — отобранный срез, который читается за 40 секунд."""
+  card: Card!
+
+  """Живое состояние сервиса и содержимого базы."""
+  health: Health!
+
+  """Полное резюме: все буллеты, проекты и образование из той же базы."""
+  resume: Resume!
+
+  """Поиск по featured-буллетам, проектам, навыкам и местам работы."""
+  search(
+    """Сколько находок вернуть, максимум 100."""
+    limit: Int = 20
+
+    """
+    Подстрока поиска по буллетам, проектам, навыкам и местам работы. От 2 до 64 символов.
+    """
+    query: String!
+  ): SearchResult!
+}
+
+"""Полное резюме: все буллеты, проекты и образование."""
+type Resume {
+  education: [Education!]!
+  experiences: [Experience!]!
+  languages: [Language!]!
+  links: [ContactLink!]!
+  metrics: [Metric!]!
+  profile: Profile!
+  projects: [Project!]!
+  skillGroups: [SkillGroup!]!
+}
+
+"""Находка поиска по содержимому визитки."""
+type SearchHit {
+  company: String
+  id: String!
+  kind: SearchHitKind!
+  text: String!
+  title: String!
+}
+
+"""
+Значение перечисления SearchHitKind; источник истины — zod-union в @card/contracts.
+"""
+enum SearchHitKind {
+  achievement
+  experience
+  project
+  skill
+}
+
+"""Ответ поиска: запрос, общее число совпадений и срез."""
+type SearchResult {
+  hits: [SearchHit!]!
+
+  """То, что искалось — возврат для отладки запроса из GraphiQL."""
+  query: String!
+  total: Int!
+}
+
+"""Технология в группе."""
+type Skill {
+  """На витрине показаны только featured; в resume — все навыки группы."""
+  featured: Boolean!
+  id: String!
+  name: String!
+
+  """Контекст: где именно применялась."""
+  note: String
+  position: Int!
+}
+
+"""Группа стека: фронтенд, бэкенд, данные, инструментальное."""
+type SkillGroup {
+  id: String!
+  name: String!
+  position: Int!
+  skills: [Skill!]!
+  slug: String!
+}
