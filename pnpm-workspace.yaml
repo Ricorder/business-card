@@ -1,0 +1,22 @@
+packages:
+  - 'packages/*'
+
+# pnpm 12 по умолчанию не выполняет install-скрипты зависимостей. Без этих
+# разрешений better-sqlite3 не компилируется, а Prisma не скачивает engines —
+# сборка в Docker упадёт ровно так же, как локально.
+allowBuilds:
+  '@apollo/protobufjs': true
+  '@parcel/watcher': true
+  '@prisma/engines': true
+  better-sqlite3: true
+  esbuild: true
+  prisma: true
+
+minimumReleaseAgeExclude:
+  - '@turbo/darwin-64@2.11.12'
+  - '@turbo/darwin-arm64@2.11.12'
+  - '@turbo/linux-64@2.11.12'
+  - '@turbo/linux-arm64@2.11.12'
+  - '@turbo/windows-64@2.11.12'
+  - '@turbo/windows-arm64@2.11.12'
+  - turbo@2.11.12

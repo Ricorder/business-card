@@ -1,0 +1,38 @@
+# Зависимости
+# Без слэша в конце: pnpm делает node_modules симлинком, а правило `node_modules/`
+# матчит только каталог, симлинк остаётся виден git.
+node_modules
+.pnpm-store
+
+# Сборка
+dist
+.next
+out
+static
+coverage
+*.tsbuildinfo
+packages/api/src/generated
+
+# Локальная база и секреты
+*.db
+*.db-journal
+*.sqlite
+.env
+.env.local
+.test-db
+var/*
+!var/.gitkeep
+
+# Кеш сборщиков
+.turbo
+
+# Кеш и мусор ОС/редактора
+.DS_Store
+.idea
+.vscode
+.qwen
+
+# Логи
+*.log
+npm-debug.log*
+pnpm-debug.log*

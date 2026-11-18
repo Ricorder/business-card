@@ -1,0 +1,28 @@
+{
+  "name": "business-card",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Цифровая визитка: NestJS + GraphQL + Prisma (SQLite) раздают Next.js static export",
+  "license": "MIT",
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:setup": "pnpm --filter @card/api db:generate && pnpm --filter @card/api db:deploy && pnpm --filter @card/api db:seed",
+    "schema:dump": "pnpm --filter @card/api schema:dump",
+    "start": "pnpm --filter @card/api start",
+    "docker:build": "docker build -t business-card:local .",
+    "docker:up": "docker compose up --build",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.12",
+    "typescript": "5.9.3"
+  }
+}
