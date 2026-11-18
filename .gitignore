@@ -7,11 +7,12 @@ node_modules
 # Сборка
 dist
 .next
-out
-static
 coverage
 *.tsbuildinfo
 packages/api/src/generated
+packages/api/dist
+packages/contracts/dist
+packages/web/out
 
 # Локальная база и секреты
 *.db
