@@ -1,0 +1,26 @@
+{
+  "name": "@card/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Общий слой контрактов: zod-схемы ответа GraphQL и типы для API и веба",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}
