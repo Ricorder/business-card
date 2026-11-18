@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.9.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Зависимости
+        run: pnpm install --frozen-lockfile
+
+      - name: Сборка всех пакетов
+        run: pnpm build
+
+      - name: Типы
+        run: pnpm typecheck
+
+      - name: Тесты
+        run: pnpm test
+
+      - name: Вычитка русской прозы
+        run: node scripts/proofread.mjs
+
+      - name: Контракт не разъехался со схемой
+        run: git diff --exit-code -- packages/api/schema.graphql
+
+      - name: Docker-образ собирается
+        run: docker build -t business-card:ci .
+
+      - name: Контейнер стартует и отвечает
+        run: |
+          docker run -d --name card -p 4000:4000 business-card:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4000/healthz >/tmp/health.json; then break; fi
+            sleep 2
+          done
+          cat /tmp/health.json
+          curl -fsS http://127.0.0.1:4000/ | grep -q 'Евгений Колесников'
+          curl -fsS -X POST http://127.0.0.1:4000/graphql \
+            -H 'content-type: application/json' \
+            -d '{"query":"{ card { profile { displayName } } }"}' | grep -q 'displayName'
+          docker logs card
+          docker rm -f card
