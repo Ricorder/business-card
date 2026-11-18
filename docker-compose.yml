@@ -1,0 +1,21 @@
+services:
+  card:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: business-card:local
+    container_name: business-card
+    ports:
+      - '4000:4000'
+    environment:
+      PORT: '4000'
+      HOST: '0.0.0.0'
+      DATABASE_URL: 'file:/data/card.db'
+      GRAPHIQL: 'true'
+      CARD_APP_VERSION: '1.0.0'
+    volumes:
+      - card-data:/data
+    restart: unless-stopped
+
+volumes:
+  card-data:
